@@ -1,28 +1,39 @@
 {
-  "name": "ts-template",
+  "name": "@mificot/cookie-parser",
   "version": "1.0.0",
-  "description": "",
+  "description": "Yet another cookie parser inspired by the most popular `cookie` module",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "typings": "./dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsup",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "jest",
+    "benchmark": "npm run build && node ./benchmark/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "cookie",
+    "cookies",
+    "simple-parser",
+    "parser",
+    "cookie-header",
+    "cookies-header"
+  ],
   "author": "mificot",
   "license": "MIT",
   "files": [
     "dist/**/*"
   ],
-  "repository": "",
+  "repository": "https://github.com/mificot/cookie-parser",
   "engines": {
     "node": "18.x"
   },
   "devDependencies": {
+    "@types/benchmark": "^2.1.2",
     "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "benchmark": "^2.1.4",
     "eslint": "^8.32.0",
     "eslint-config-standard-with-typescript": "^33.0.0",
     "eslint-plugin-import": "^2.27.5",
