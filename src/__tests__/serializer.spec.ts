@@ -1,4 +1,5 @@
 import { serialize } from '../serializer.js'
+import { createSigner } from '../signer.js'
 
 const INVALID_FIELD_CONTENT_ERROR_REGEXP = /is invalid. Refer to RFC/
 
@@ -122,6 +123,16 @@ describe('serialize with options', () => {
       const expected = 1000
 
       expect(serialize('foo', 'bar', { maxAge })).toBe(`foo=bar; MaxAge=${expected}`)
+    })
+  })
+
+  describe('serialize with "signer" option', () => {
+    it('should serialize signed cookie', () => {
+      const secret = 'secretKey'
+      const signer = createSigner(secret)
+      const expected = 'username=mificot.91be1aa5bb7b88e639ce5b025cf08592945cc34508aeafb8d01f7ba497490d1b'
+
+      expect(serialize('username', 'mificot', { signer })).toBe(expected)
     })
   })
 })
