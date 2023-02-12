@@ -1,7 +1,7 @@
 {
   "name": "@mificot/cookies",
   "version": "1.0.0",
-  "description": "Yet another cookie lib inspired by the `cookie` module",
+  "description": "Library with utilities to work with cookie",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "typings": "./dist/index.d.ts",
@@ -18,14 +18,18 @@
     "simple-parser",
     "parser",
     "cookie-header",
-    "cookies-header"
+    "cookies-header",
+    "cookie-serializer",
+    "cookie-sign",
+    "cookie-unsign",
+    "safe-cookie"
   ],
   "author": "mificot",
   "license": "MIT",
   "files": [
     "dist/**/*"
   ],
-  "repository": "https://github.com/mificot/cookie-parser",
+  "repository": "https://github.com/mificot/cookies",
   "engines": {
     "node": "18.x"
   },
