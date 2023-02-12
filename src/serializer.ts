@@ -1,4 +1,4 @@
-import { CookieBuilder, type SameSite } from './cookie-builder.js'
+import { CookieBuilder, type SameSite } from './internal/cookie-builder.js'
 
 interface SerializeOptions {
   domain?: string
