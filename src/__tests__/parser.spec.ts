@@ -1,4 +1,5 @@
 import { parse } from '../parser.js'
+import { createSigner } from '../signer.js'
 
 function createMapFromObject (object: Record<string, string>): Map<string, string> {
   return new Map<string, string>(Object.entries(object))
@@ -67,5 +68,30 @@ describe('parser', function () {
     expect(parse('foo=%1;bar=bar;foo=boo')).toStrictEqual(createMapFromObject({ foo: '%1', bar: 'bar' }))
     expect(parse('foo=false;bar=bar;foo=true')).toStrictEqual(createMapFromObject({ foo: 'false', bar: 'bar' }))
     expect(parse('foo=;bar=bar;foo=boo')).toStrictEqual(createMapFromObject({ foo: '', bar: 'bar' }))
+  })
+})
+
+describe('parse with signer', () => {
+  it('should unsing cookie on parse', () => {
+    const secret = 'secretKey'
+    const signedCookie = 'username=mificot.91be1aa5bb7b88e639ce5b025cf08592945cc34508aeafb8d01f7ba497490d1b'
+    const expected = new Map([['username', 'mificot']])
+
+    const signer = createSigner(secret)
+
+    expect(parse(signedCookie, {
+      signer
+    })).toStrictEqual(expected)
+  })
+
+  it('should throw if invalid cookie to signer', () => {
+    const secret = 'secretKey123'
+    const signedCookie = 'username=mificot.91be1aa5bb7b88e639ce5b025cf08592945cc34508aeafb8d01f7ba497490d1b'
+
+    const signer = createSigner(secret)
+
+    expect(() => parse(signedCookie, {
+      signer
+    })).toThrow(/Malformed cookie/)
   })
 })

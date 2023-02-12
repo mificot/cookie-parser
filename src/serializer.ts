@@ -1,4 +1,5 @@
 import { CookieBuilder, type SameSite } from './internal/cookie-builder.js'
+import { type Signer } from './interfaces/signer.interface.js'
 
 interface SerializeOptions {
   domain?: string
@@ -9,6 +10,7 @@ interface SerializeOptions {
   sameSite?: SameSite
   secure?: boolean
   encode?: (value: string) => string
+  signer?: Signer
 }
 
 function assertNameType (name: any): void {
@@ -34,6 +36,7 @@ export function serialize (name: string, value: string, options?: SerializeOptio
   }
 
   value = options.encode(value)
+  value = options.signer ? options.signer.sign(value) : value
 
   const cookieBuilder = new CookieBuilder()
 
