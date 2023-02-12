@@ -1,7 +1,7 @@
 {
-  "name": "@mificot/cookie-parser",
+  "name": "@mificot/cookies",
   "version": "1.0.0",
-  "description": "Yet another cookie parser inspired by the most popular `cookie` module",
+  "description": "Yet another cookie lib inspired by the `cookie` module",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "typings": "./dist/index.d.ts",
