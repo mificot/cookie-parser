@@ -1,7 +1,10 @@
-/**
- * This method asserts input type, because lib can be used in js environment or in IDE which
- * do not support typescript declarations
- */
+import { type Signer } from './interfaces/signer.interface.js'
+
+interface ParseOptions {
+  decode?: (value: string, key?: string) => string
+  signer?: Signer
+}
+
 function assertInputType (input: any): void {
   if (typeof input !== 'string') {
     throw new TypeError('input parameter must be a string')
@@ -20,10 +23,15 @@ function decode (input: string): string {
   }
 }
 
-export function parse (input: string): Map<string, string> {
+export function parse (input: string, options?: ParseOptions): Map<string, string> {
   assertInputType(input)
+  options = options ?? {}
 
-  const result: Map<string, string> = new Map<string, string>()
+  if (!options.decode) {
+    options.decode = decode
+  }
+
+  const result: Map<string, any> = new Map<string, string>()
 
   let cursor = 0
 
@@ -62,8 +70,10 @@ export function parse (input: string): Map<string, string> {
     const key = input.slice(cursor, equalSignIndex).trimEnd()
 
     if (!result.has(key)) {
-      const value = input.slice(equalSignIndex + 1, separatorIndex).trim()
-      result.set(key, decode(value))
+      const value: string = input.slice(equalSignIndex + 1, separatorIndex).trim()
+      const decodedValue = options.decode(value, key)
+
+      result.set(key, options.signer ? options.signer.unsign(decodedValue) : decodedValue)
     }
 
     cursor = separatorIndex + 1
